@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
+.wrap {
+  display: flex;
+  .sidebar {
+    flex-basis: 30%;
+    padding: 2rem;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    background-color: #FCFCFC;
+    border-radius: 10px;
+    .header{
+
+      .sort-price{
+        .price-from{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          p{
+            color: #00000094;
+            font-weight: 600;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+  .product {
+    flex-basis: calc(70% - 30px);
+  }
+}
+.ant-slider{
+    margin: 0 5px;
+}
+
+.ant-slider .ant-slider-handle::after {
+  border-radius: 20%;
+  border: 2px solid #3f7824;
+}
+.ant-slider .ant-slider-rail {
+  border-radius: 10px 10px 10px 10px;
+  border: 2px solid #3f7824;
+}
+.price {
+  font-family: "Inter";
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: -0.015em;
+  text-align: left;
+
+  color: #fd9f20;
+}
+.ant-input-number .ant-input-number-input {
+  width: max-content;
+  font-family: "Inter";
+  color: #fd9f20;
+  font-size: 18px;
+  font-weight: 600;
+}

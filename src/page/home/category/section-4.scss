@@ -1,0 +1,100 @@
+.section-4 {
+  padding: 100px 0;
+  .header-category {
+    display: flex;
+    justify-content: center;
+    .content {
+      flex-basis: 50%;
+      max-width: 40%;
+      padding: 0px 0 100px 0;
+      h1 {
+        width: 477px;
+        font-family: RalewayBold;
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 56px;
+        color: #3f7824;
+      }
+      p {
+        width: 477px;
+        margin: 30px 0;
+        font-family: Raleway400;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 28px;
+      }
+      .show-more {
+        padding: 20px 40px;
+        background-color: #3f7824;
+        border-radius: 8px;
+        border: 1px solid #fff;
+
+        font-family: RalewayBold;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 19px;
+        color: #fff;
+        transition: all .5s;
+        &:hover{
+        background-color:#fff;
+        border: 1px solid #3f7824;
+        color: #3f7824
+
+        }
+      }
+    }
+  }
+
+  .popip {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+
+    .cate-title,
+    .cate-img {
+      flex-basis: 50%;
+      max-width: 40%;
+    }
+    .cate-img {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .cate-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .btn-title {
+        display: flex;
+        flex-basis: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        border-bottom: 1px solid #878484d9;
+
+        p {
+          font-family: RalewayBold;
+
+          font-size: 24px;
+          font-weight: 600;
+          line-height: 28px;
+        }
+        .arrowR {
+          overflow: hidden;
+          width: 0;
+          transform: translateX(-100px);
+
+          transition: all 0.5s;
+        }
+        &:hover .arrowR {
+          width: 30px;
+          transform: translateX(0px);
+        }
+        &:hover {
+          background-color: #e4e3e3;
+        }
+      }
+    }
+  }
+}
