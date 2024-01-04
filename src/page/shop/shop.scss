@@ -1,21 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
-
+@use "../../styles/comon.scss" as *;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
 .wrap {
   display: flex;
+  gap: 3rem;
   .sidebar {
-    flex-basis: 30%;
+    flex-basis: 20%;
     padding: 2rem;
     box-shadow: 0px 4px 4px 0px #00000040;
-    background-color: #FCFCFC;
+    background-color: #fcfcfc;
     border-radius: 10px;
-    .header{
-
-      .sort-price{
-        .price-from{
+    .header {
+      .sort-price {
+        .price-from {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          p{
+          p {
             color: #00000094;
             font-weight: 600;
             font-size: 18px;
@@ -24,12 +24,74 @@
       }
     }
   }
-  .product {
-    flex-basis: calc(70% - 30px);
+  .products {
+    flex-basis: calc(80% - 5rem );
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    .box-product {
+      flex-basis: calc(25% - 15px);
+      max-height: 435px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0px 4px 4px 0px #00000040;
+      padding: 2rem 0;
+      border-radius: 0.5rem;
+      gap: 20px;
+
+      .box-img {
+        background-color: #eeeeee;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+      .box-title,
+      .box-price,
+      .box-btn {
+        padding: 0 10px;
+      }
+      .box-btn {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        .order-now {
+          flex-basis: calc(85% - 10px);
+          background-color: #3f7824;
+          text-align: center;
+          padding: 5px;
+          border-radius: 5px;
+          color: #fff;
+        }
+        .btn-add-to-cart {
+          padding: 5px;
+          border-radius: 5px;
+          border: 2px solid #3f7824;
+          font-size: 22px;
+        }
+      }
+      .box-title {
+        font-family: Raleway700;
+        font-size: 18px;
+        font-weight: 600;
+        color: #20304d;
+        line-height: 11px;
+        letter-spacing: -0.015em;
+      }
+      .box-price {
+        font-family: Inter;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 19px;
+        letter-spacing: -0.015em;
+        color: #fd9f20;
+      }
+    }
   }
 }
-.ant-slider{
-    margin: 0 5px;
+.ant-slider {
+  margin: 0 5px;
 }
 
 .ant-slider .ant-slider-handle::after {

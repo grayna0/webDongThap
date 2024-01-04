@@ -1,5 +1,7 @@
 
 import Admin from '../admin/Admin';
+import LoginAdmin from '../compoents/auth/LoginAdmin';
+import SinginAdmin from '../compoents/auth/SigninAdmin';
 import Contact from '../page/contact/Contact';
 import Introduction from '../page/introduction/Introduction';
 // import LayOut from "../compoents/layout";
@@ -32,5 +34,19 @@ import Shop from './../page/shop/Shop';
         title: "",
         path:"/admin",
         compoent: Admin
+    }
+    , {
+        title: "",
+        path:"/admin/login",
+        compoent: LoginAdmin
+    }, {
+        title: "",
+        path:"/admin/singin",
+        compoent: SinginAdmin
+    }
+    , {
+        title: "",
+        path:"/admin/addProduct",
+        compoent: SinginAdmin
     }
 ]

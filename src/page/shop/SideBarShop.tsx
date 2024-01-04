@@ -1,13 +1,35 @@
-import { Checkbox, Collapse, ConfigProvider, InputNumber, Slider } from "antd";
+// @ts-nocheck
+import {
+  Checkbox,
+  Collapse,
+  ConfigProvider,
+  Flex,
+  InputNumber,
+  Slider,
+} from "antd";
 import Search from "antd/es/input/Search";
 
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { MyContext } from "../../hook/Context";
 const CheckboxGroup = Checkbox.Group;
 const SideBarShop = () => {
+  const { products ,sreachProducts} = useContext(MyContext);
   const [inputValue, setInputValue] = useState<number[]>([0, 500]);
+  const [checkedList, setCheckedList] = useState([]);
+  const [checkedRate, setcheckedRate] = useState<string[]>([]);
+  const plainOptions =["Ca Cao", "Trà","Trái Cây" , "Dứa"];
 
   const onChange = (newValue: number[]) => {
     setInputValue(newValue);
+  };
+  const selectCate = (newValue = plainOptions) => {
+    sreachProducts("cate",newValue[0])
+    setCheckedList(newValue);
+  };
+  const selectRate = (newValue = ["5 sao", "4 sao", "3 sao", "2 sao", "1 sao"]) => {
+    setcheckedRate(newValue);
+    sreachProducts("rate",newValue)
+
   };
 
   return (
@@ -23,7 +45,11 @@ const SideBarShop = () => {
             handleSizeHover: 20,
             trackBg: "#3F7824",
             trackHoverBg: "#3F7824",
+            
           },
+        },
+        token: {
+          colorPrimary:"#3F7824"
         },
       }}
     >
@@ -45,7 +71,9 @@ const SideBarShop = () => {
                       <div
                         style={{
                           display: "flex",
-                          justifyContent: "space-between", }}>
+                          justifyContent: "space-between",
+                        }}
+                      >
                         <p className="price">0</p>
                         <p className="price">500.000đ</p>
                       </div>
@@ -67,7 +95,11 @@ const SideBarShop = () => {
                           min={1}
                           max={5000000}
                           style={{ margin: "0 16px" }}
-                          value={   typeof inputValue[0] === "number"   ? inputValue[0]: 0}
+                          value={
+                            typeof inputValue[0] === "number"
+                              ? inputValue[0]
+                              : 0
+                          }
                           onChange={(e: any) => onChange([e, inputValue[1]])}
                         />
                         <p>Đến</p>
@@ -78,7 +110,11 @@ const SideBarShop = () => {
                           min={1}
                           max={500}
                           style={{ margin: "0 16px" }}
-                          value={ typeof inputValue[1] === "number" ? inputValue[1]: 0  }
+                          value={
+                            typeof inputValue[1] === "number"
+                              ? inputValue[1]
+                              : 0
+                          }
                         />
                       </div>
                     </>
@@ -87,30 +123,78 @@ const SideBarShop = () => {
               ]}
             />
           </div>
-        <div className="sreach">
-          <div className="sort-cate">
-          <Collapse
-              collapsible="header"
-              defaultActiveKey={["1"]}
-              expandIconPosition="end"
-              ghost={true}
-              items={[
-                {
-                  key: "1",
-                  label:"Loại sản phẩm",
-                  children:(
-                    <>
-                     <Search placeholder="Tìm kiếm..." onSearch={e => console.log(e)} style={{ width: "100%"}} />
-                     {/* <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} /> */}
-                     </>
-                  )
-                }
-              ]}
+          <div className="sreach">
+            <div className="sort-cate">
+              <Collapse
+                collapsible="header"
+                defaultActiveKey={["1"]}
+                expandIconPosition="end"
+                ghost={true}
+                items={[
+                  {
+                    key: "1",
+                    label: "Loại sản phẩm",
+                    children: (
+                      <>
+                        <Search
+                          placeholder="Tìm kiếm..."
+                          onSearch={(e) => console.log(e)}
+                          style={{ width: "100%", marginBottom:20 }}
+                        />
+                        <CheckboxGroup
+                          options={[...new Set(plainOptions)]}
+                          value={checkedList[checkedList.length - 1]}
+                          onChange={selectCate}
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            flexWrap: "wrap",
+                            flex:1 ,
+                            height: 200,
+                            overflow:"hidden",
+                            gap: 20,
+                          }}
+                        />
+                      </>
+                    ),
+                  },
+                ]}
               />
-            
+            </div>
+            <div className="sort-rate">
+              <Collapse
+                collapsible="header"
+                defaultActiveKey={["1"]}
+                expandIconPosition="end"
+                ghost={true}
+                items={[
+                  {
+                    key: "1",
+                    label: "Đánh giá OCOP",
+                    children: (
+                      <>
+                        <CheckboxGroup
+                          options={["5 sao", "4 sao", "3 sao", "2 sao", "1 sao"]}
+                      
+                          value={checkedRate[checkedRate.length - 1]}
+                          onChange={selectRate}
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            flexWrap: "wrap",
+                            flex:1 ,
+                            height: 200,
+                            overflow:"hidden",
+                            gap: 20,
+                          }}
+                        />
+                      </>
+                    ),
+                  },
+                ]}
+              />
+            </div>
           </div>
-          <div className="price">500</div>
-        </div>
         </div>
       </div>
     </ConfigProvider>
