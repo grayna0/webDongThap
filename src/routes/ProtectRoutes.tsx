@@ -13,7 +13,7 @@ const protectRoutes = (WrappedComponent) => {
     }, []);
 
     return (
-      <WrappedComponent/>
+      <WrappedComponent userLogger={userLogger}/>
     );
   };
 

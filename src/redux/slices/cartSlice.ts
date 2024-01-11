@@ -3,10 +3,12 @@ import useLocalStorage from "../../hook/useStorage";
 import setToastMessage from "../../compoents/setToastMessage";
 
 
-const {setItemStorage} =useLocalStorage()
+const {setItemStorage,getItemStorage} =useLocalStorage()
+const list = getItemStorage("cart")
 const initialState :any={
-    listItem:[],
-    totalPrice:0
+    listItems:list? list : [],
+  
+
 }
 
 export const cartSlice = createSlice(
@@ -15,40 +17,54 @@ export const cartSlice = createSlice(
         initialState,
         reducers:{
             addToCart(state, action){
-                const checkItemExits = state.listItem.find((item) => item.id === action.payload.id)
-                const item= {
-                    id:action.payload.id,
-                    name: action.payload.name,
-                    price: action.payload.price,
-                    quantity:0,
-                    time: new Date()
-                }
-                if(checkItemExits !== undefined){
-                    checkItemExits.quantity ++
-                    state.totalPrice +=checkItemExits.totalPrice
-                    
-                }else  {
-                    state.listItem.push(item) 
+                const user =getItemStorage("u")
+                if(user) {
 
+                    const checkItemExits = state.listItems.find((item) => item.id === action.payload.id)
+                    const item= {
+                        id:action.payload.id,
+                        name: action.payload.name,
+                        price: action.payload.price,
+                        img:action.payload.img[0],
+                        quantity:1,
+               
+                    }
+                    if(checkItemExits !== undefined){
+                        checkItemExits.quantity ++
+              
+                        
+                    }else  {
+                        state.listItems.push(item) 
+    
+                    }
+                    setItemStorage("cart",[...state.listItems]) 
+                    setToastMessage("Thêm thành công")    
+                }else{
+                    setToastMessage("You need to Login")
                 }
-                setItemStorage("cart",[...state.listItem]) 
-                setToastMessage("Add to cart Successfully!")    
             },
             removeCart(state,action) {
                 const id =action.payload.id
-                const checkItemExits = state.listItem.find((item) => item.id === action.payload.id)
+                const checkItemExits = state.listItems.find((item) => item.id === id)
                 if (checkItemExits.quantity === 1) {
-                    state.listItems = state.listItem.filter((item) => item.id !== checkItemExits.id)
-                    checkItemExits.quantity--
-                    state.totalPrice -=checkItemExits.totalPrice
+                    state.listItems = state.listItems.filter((item) => item.id !== id)
+               
                 }else{
                     checkItemExits.quantity--
-                    state.totalPrice -=checkItemExits.totalPrice
+         
                 }
-                setToastMessage("Remove to cart Successfully!")    
+                setItemStorage("cart",[...state.listItems])
+         
+            },
+            deleteItem(state,action){
+                const id =action.payload.id
+                const checkItemExits = state.listItems.find((item) => item.id === id)
+                state.listItems = state.listItems.filter((item) => item.id !== id)
+                setItemStorage("cart",[...state.listItems])
+                setToastMessage("Xoá sản phẩm thành công!")   
             }
         }
     }
 )
-export const { addToCart,removeCart} = cartSlice.actions
+export const { addToCart,removeCart,deleteItem} = cartSlice.actions
 export default cartSlice.reducer

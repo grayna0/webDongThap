@@ -13,23 +13,39 @@ import React, { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../hook/Context";
 const CheckboxGroup = Checkbox.Group;
 const SideBarShop = () => {
-  const { products ,sreachProducts} = useContext(MyContext);
+  const { sreachProducts } = useContext(MyContext);
   const [inputValue, setInputValue] = useState<number[]>([0, 500]);
   const [checkedList, setCheckedList] = useState([]);
   const [checkedRate, setcheckedRate] = useState<string[]>([]);
-  const plainOptions =["Ca Cao", "Trà","Trái Cây" , "Dứa"];
+  const [arrInputSreach, setArrInputSreach] = useState<any>({
+    cate:null,
+    price:null ,
+    name:null,
+    rate:null,
+  })
+  
+  const plainOptions = ["Ca Cao", "Trà", "Trái Cây", "Dứa"];
+
+
 
   const onChange = (newValue: number[]) => {
+
     setInputValue(newValue);
+    setArrInputSreach(arrInputSreach => ({...arrInputSreach, price: newValue}))
+    sreachProducts({...arrInputSreach, price: newValue});
   };
   const selectCate = (newValue = plainOptions) => {
-    sreachProducts("cate",newValue[0])
-    setCheckedList(newValue);
-  };
-  const selectRate = (newValue = ["5 sao", "4 sao", "3 sao", "2 sao", "1 sao"]) => {
-    setcheckedRate(newValue);
-    sreachProducts("rate",newValue)
+    const cate = newValue[0] !== undefined ? newValue[0] : null
 
+    setCheckedList(newValue);
+    setArrInputSreach(arrInputSreach => ({...arrInputSreach, cate: cate}))
+    sreachProducts({...arrInputSreach, cate: cate});
+  };
+  const selectRate = (newValue = ["5", "4", "3", "2", "1"]) => {
+    const rate = newValue[0] !== undefined ? newValue[0][0] : null
+    setcheckedRate(newValue);
+    setArrInputSreach(arrInputSreach => ({...arrInputSreach, rate: rate}))
+    sreachProducts({...arrInputSreach, rate:rate});
   };
 
   return (
@@ -45,11 +61,10 @@ const SideBarShop = () => {
             handleSizeHover: 20,
             trackBg: "#3F7824",
             trackHoverBg: "#3F7824",
-            
           },
         },
         token: {
-          colorPrimary:"#3F7824"
+          colorPrimary: "#3F7824",
         },
       }}
     >
@@ -138,8 +153,9 @@ const SideBarShop = () => {
                       <>
                         <Search
                           placeholder="Tìm kiếm..."
-                          onSearch={(e) => console.log(e)}
-                          style={{ width: "100%", marginBottom:20 }}
+                          onSearch={(e) => {setArrInputSreach(arrInputSreach => ({...arrInputSreach, name: e}))
+                          sreachProducts({...arrInputSreach, name: e})}}
+                          style={{ width: "100%", marginBottom: 20 }}
                         />
                         <CheckboxGroup
                           options={[...new Set(plainOptions)]}
@@ -149,9 +165,9 @@ const SideBarShop = () => {
                             display: "flex",
                             flexDirection: "column",
                             flexWrap: "wrap",
-                            flex:1 ,
+                            flex: 1,
                             height: 200,
-                            overflow:"hidden",
+                            overflow: "hidden",
                             gap: 20,
                           }}
                         />
@@ -174,17 +190,22 @@ const SideBarShop = () => {
                     children: (
                       <>
                         <CheckboxGroup
-                          options={["5 sao", "4 sao", "3 sao", "2 sao", "1 sao"]}
-                      
+                          options={[
+                            "5 sao",
+                            "4 sao",
+                            "3 sao",
+                            "2 sao",
+                            "1 sao",
+                          ]}
                           value={checkedRate[checkedRate.length - 1]}
                           onChange={selectRate}
                           style={{
                             display: "flex",
                             flexDirection: "column",
                             flexWrap: "wrap",
-                            flex:1 ,
+                            flex: 1,
                             height: 200,
-                            overflow:"hidden",
+                            overflow: "hidden",
                             gap: 20,
                           }}
                         />

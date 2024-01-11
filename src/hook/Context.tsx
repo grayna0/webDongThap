@@ -24,32 +24,50 @@ const MySate = ({ children }) => {
   const { setItemStorage, getItemStorage } = useLocalStorage();
   const [products, setProducts] = useState<any[]>([]);
   const [product, setProduct] = useState<any>(null);
-  const [userLogger, setUserLogger] = useState<any>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const getUserFromLocal = () => {
-    const user = getItemStorage("u");
-    setUserLogger(user);
-  };
-const sreachProducts = (cate,values) => {
-  if( cate && values){
+  // Sreach key
+  const sreachProducts = (agr) => { 
+   const valuesChecked= Object.keys(agr).filter(key  => agr[key] !== null)
+    try {
+      let q = query(collection(fireDB, "products"));
+      if (valuesChecked.length > 0) {
+            valuesChecked.forEach((key) => {
+          switch (key) {
+            case "price":
+              q = query(q, where("price", ">=", agr.price[0]), where("price", "<=", agr.price[1]));
+              break;
+            case "cate":
+              q = query(q, where("cate", "==", agr.cate));
+              break;
+            case "name":
+              q = query(q, where("name", ">=", agr.name), where("name", "<=", agr.name + '\uf8ff'));
+              break;
+            case "rate":
+              q = query(q, where("rate", "==", agr.rate));
+              break; 
+          }        
+        });     
+      }
+      const unsubscribe =  onSnapshot(q, (querySnapshot) => {
+        const productsData: any = [];
+        querySnapshot.forEach((doc) => {
+          productsData.push({ ...doc.data(), id: doc.id });
+        });
+        setProducts(productsData);
+        setLoading(false);
+      });
 
-    const q = query(collection(fireDB, "products"),where(cate, "==", values ));
-    
-  const unsubscribe = onSnapshot(q, (querySnapshot) => {
-          const productsData: any = [];
-          querySnapshot.forEach((doc) => {
-            productsData.push({ ...doc.data(), id: doc.id });
-          });
-          setProducts(productsData);
-          setLoading(false);
-  
-          return productsData;})
-  }else{
-    getProducts()
-  }
-  
-}
+      return unsubscribe;
+    } catch (error) {
+      setToastMessage("Get products error");
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+
+  // ADD PRODUCT
   const addProduct = async (values) => {
     setLoading(true);
     const firebaseCollection = collection(fireDB, "products");
@@ -76,7 +94,6 @@ const sreachProducts = (cate,values) => {
     } catch (error) {
       setToastMessage("Get products error");
       console.log(error);
-      
     }
   };
   // Register
@@ -104,7 +121,7 @@ const sreachProducts = (cate,values) => {
   // Login
 
   const userLogin = async (values: any) => {
-    setLoading(true)
+    setLoading(true);
     try {
       const emailLogin = await signInWithEmailAndPassword(
         auth,
@@ -117,18 +134,14 @@ const sreachProducts = (cate,values) => {
           token: emailLogin.user.accessToken,
           username: emailLogin.user.email,
         });
-        
       }
-      
-      
+
       setTimeout(() => {
         setLoading(false);
-        getUserFromLocal();
         setShowModal(false);
       }, 1500);
-      
+
       setToastMessage("Login successful");
-      
     } catch (error) {
       setToastMessage("Failed to login");
     }
@@ -186,8 +199,9 @@ const sreachProducts = (cate,values) => {
         registerUser,
         withGoogle,
         userLogin,
-        userLogger,
-        sreachProducts
+
+        sreachProducts,
+    
       }}
     >
       {children}

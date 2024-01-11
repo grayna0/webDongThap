@@ -1,7 +1,7 @@
 import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import { Dropdown, MenuProps, Space } from "antd";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const userDropdown = [
   {
     key: "1",
@@ -14,6 +14,7 @@ const userDropdown = [
 ];
 
 const Menuicon = ({ props = [], name }) => {
+  const navigate =useNavigate()
   const cartListDropDown = props.map((item: any) => {
     return {
       key: "1",
@@ -28,9 +29,9 @@ const Menuicon = ({ props = [], name }) => {
       ),
     };
   });
-
-  const items: MenuProps["items"] =
-    name === "user" ? userDropdown : cartListDropDown;
+  
+    const items: MenuProps["items"] =
+      name === "user" ? userDropdown : cartListDropDown;
 
   return (
     <>
@@ -40,7 +41,7 @@ const Menuicon = ({ props = [], name }) => {
             {name === "user" ? (
               <UserOutlined className="icons" />
             ) : (
-              <ShoppingCartOutlined className="icons" />
+              <ShoppingCartOutlined className="icons" onClick={()=> navigate("/cart")} />
             )}
           </Space>
         </a>

@@ -6,9 +6,9 @@ import { useSelector } from "react-redux";
 import { MyContext } from "../../hook/Context";
 import protectRoutes from "../../routes/ProtectRoutes";
 
-const HeaderChild = () => {
+const HeaderChild = ({userLogger}) => {
   const { listItem } = useSelector((state: any) => state.cart);
-  const {userLogger,setShowModal} = useContext(MyContext)
+  const {setShowModal} = useContext(MyContext)
 
   
 
@@ -43,4 +43,4 @@ const HeaderChild = () => {
   );
 };
 
-export default HeaderChild
+export default protectRoutes(HeaderChild)

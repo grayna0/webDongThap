@@ -7,6 +7,7 @@
 $main-bg: #F3F3F3;
 $soft-bg: #7AAB33;
 $dark-bg: #D04D4D;
+$btn-bg:#3f7824;
 //TEXT
 $main-color: #3F7824CC;
 $soft-color: #20304D;
@@ -90,4 +91,17 @@ button{
 }
 .container{
   padding: 0 10rem;
+}
+.price{
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: -0.015em;
+  color: #fd9f20;
+}
+.btn{
+  background-color: $btn-bg;
+  border-radius:1rem ;
+
 }

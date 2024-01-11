@@ -2,6 +2,8 @@
 import Admin from '../admin/Admin';
 import LoginAdmin from '../compoents/auth/LoginAdmin';
 import SinginAdmin from '../compoents/auth/SigninAdmin';
+import CartList from '../page/cart/CartList';
+import Checkout from '../page/checkout/Checkout';
 import Contact from '../page/contact/Contact';
 import Introduction from '../page/introduction/Introduction';
 // import LayOut from "../compoents/layout";
@@ -29,6 +31,17 @@ import Shop from './../page/shop/Shop';
         title: "Lien he",
         path:"/lienhe",
         compoent: Contact
+    }
+    ,
+    {
+        title: "",
+        path:"/cart",
+        compoent: CartList
+    },
+    {
+        title: "",
+        path:"/checkout",
+        compoent: Checkout
     }
     , {
         title: "",
