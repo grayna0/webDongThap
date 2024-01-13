@@ -1,7 +1,7 @@
 import React from "react";
 
 import { NavLink } from "react-router-dom";
-import { router } from "../../routes/routes";
+import { router } from "../../../routes/routes";
 
 const MenuPage = () => {
   return (

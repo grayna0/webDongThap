@@ -6,6 +6,7 @@ import CartList from '../page/cart/CartList';
 import Checkout from '../page/checkout/Checkout';
 import Contact from '../page/contact/Contact';
 import Introduction from '../page/introduction/Introduction';
+import ProductDetail from '../page/productdetail/ProductDetail';
 // import LayOut from "../compoents/layout";
 import Home from './../page/home/Home';
 import Shop from './../page/shop/Shop';
@@ -42,6 +43,11 @@ import Shop from './../page/shop/Shop';
         title: "",
         path:"/checkout",
         compoent: Checkout
+    },
+    {
+        title: "",
+        path:"/:id",
+        compoent: ProductDetail
     }
     , {
         title: "",

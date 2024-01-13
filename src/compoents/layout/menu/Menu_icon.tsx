@@ -19,11 +19,11 @@ const Menuicon = ({ props = [], name }) => {
     return {
       key: "1",
       label: (
-        <div>
-          <img src={item.img} alt="img" />
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <img src={item.img} alt="img" width={100} height={100}/>
           <div>
-            <h2>{item.title}</h2>
-            <p>{item.total}</p>
+            <h2>{item.name} x{item.quantity}</h2>
+            <p className="price">{item.price}.000d</p>
           </div>
         </div>
       ),

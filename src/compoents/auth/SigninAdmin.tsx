@@ -73,8 +73,6 @@ const SinginAdmin = () => {
         }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        // onFinishFailed={onFinishFailed}
-        // autoComplete="off"
       >   <Form.Item<FieldType>
       label="Username"
       name="username"

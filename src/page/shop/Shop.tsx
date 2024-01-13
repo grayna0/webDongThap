@@ -6,60 +6,27 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import { addToCart } from "../../redux/slices/cartSlice";
 import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { Pagination, Select } from "antd";
+import { Pagination, Select, Skeleton } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Shop = () => {
-  const { products, getProducts } = useContext(MyContext);
+  const { products, getProducts, loading,handleChange } = useContext(MyContext);
 
   const [handeProducts, setHanldeProducts] = useState<any[]>([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   useEffect(() => {
     getProducts();
   }, []);
   useEffect(() => {
     setHanldeProducts(products);
   }, [products]);
-  const handleChange = (value: { value: string; label: React.ReactNode }) => {
-    let productSort;
-    switch (value.value) {
-      case "rate": {
-        productSort = [...handeProducts].sort(
-          (itemFirst: any, itemLast: any) => itemFirst.rate - itemLast.rate
-        );
-        break;
-      }
-      case "increase": {
-        productSort = [...handeProducts].sort(
-          (itemFirst, itemLast) => itemFirst.price - itemLast.price
-        );
-        break;
-      }
-      case "decrease": {
-        productSort = [...handeProducts].sort(
-          (itemFirst, itemLast) => itemLast.price - itemFirst.price
-        );
-        break;
-      }
-      case "none-reverse": {
-        productSort = [...handeProducts].sort(
-          (itemFirst, itemLast) =>    itemFirst.name.localeCompare(itemLast.name)
-        );
-        break;
-      }
-      case "reverse": {
-        productSort = [...handeProducts].sort(
-          (itemFirst, itemLast) =>   itemLast.name.localeCompare(itemFirst.name)
-        );
-        break;
-      }
-    }
-
-    setHanldeProducts(productSort);
-  };
+  
   const onChange = (values: any) => {
     const arrProducts = products.slice((values - 1) * 12, values - 1 + 12);
     setHanldeProducts(arrProducts);
   };
+
   return (
     <div className="wrap">
       <SideBarShop />
@@ -97,28 +64,34 @@ const Shop = () => {
               },
             ]}
           />
-    
         </div>
         <div className="productsList">
-
-        {handeProducts.map((item: any, index: number) => {
-          return (
-            <div key={index} className="box-product">
-              <div className="box-img">
-                <img src={item.img[0]} alt="" />
-              </div>
-              <p className="box-title">{item.name}</p>
-              <p className="box-price">{item.price}.000d </p>
-              <div className="box-btn">
-                <p className="order-now">Mua ngay</p>
-                <ShoppingCartOutlined
-                  className="icons btn-add-to-cart"
-                  onClick={() => {dispatch(addToCart(item))}}
-                />
-              </div>
-            </div>
-          );
-        })}
+          {loading ? (
+            <Skeleton />
+          ) : (
+            <>
+              {handeProducts.map((item: any, index: number) => {
+                return (
+                  <div key={index} className="box-product">
+                    <div className="box-img" onClick={()=>navigate(`/${item.id}`)}>
+                      <img src={item.img[0]} alt="" />
+                    </div>
+                    <p className="box-title">{item.name}</p>
+                    <p className="box-price">{item.price}.000d </p>
+                    <div className="box-btn">
+                      <p className=" btn order-now" onClick={()=>navigate(`/${item.id}`)}>Mua ngay</p>
+                      <ShoppingCartOutlined
+                        className="icons btn-add-to-cart"
+                        onClick={() => {
+                          dispatch(addToCart(item));
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          )}
         </div>
         <Pagination
           defaultCurrent={products.length > 0 ? 10 : 0}

@@ -1,8 +1,8 @@
 import { Collapse, CollapseProps, Form, Input } from "antd";
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
-
-
+import setToastMessage from './../../compoents/setToastMessage';
+import { ToastContainer } from "react-toastify";
 
 const SecondContent = (props) => {
   const { listItems } = useSelector((state: any) => state.cart);
@@ -10,14 +10,33 @@ const SecondContent = (props) => {
     return accumulator + item.price * item.quantity;
   }, 0);
   const formRef = useRef<any>();
-  const onFinish = () => {
-    console.log("Form values:", formRef.current.getFieldValue());
+  const onFinish = async () => {
+    try {
+      
+      console.log("Form values:", formRef.current.getFieldValue());
+      if( formRef.current.getFieldValue() !== undefined)
+      
+       props.next();
+    } catch (error) {
+      setToastMessage("Bạn chưa chọn phương thức thanh toán")
+    }
   };
   const items: CollapseProps["items"] = [
     {
       key: "1",
       label: "Thanh toán khi giao hàng",
-      children: <p>Địa chỉ: Hà Nội - Việt Nam</p>,
+      children: (
+        <Form
+          ref={formRef}
+          layout="vertical"
+          style={{ maxWidth: 600 }}
+          className="form-checkout"
+          onFinish={onFinish}
+          initialValues={{adress:"Hà Nội - Việt Nam"}}
+        >
+          <p>Địa chỉ: Hà Nội - Việt Nam</p>
+        </Form>
+      ),
     },
     {
       key: "2",
@@ -37,7 +56,7 @@ const SecondContent = (props) => {
           >
             <Input />
           </Form.Item>
-  
+
           <Form.Item
             label="Số thẻ"
             name="number-cart"
@@ -45,7 +64,7 @@ const SecondContent = (props) => {
           >
             <Input />
           </Form.Item>
-  
+
           <div style={{ display: "flex", gap: "2rem" }}>
             <Form.Item
               label="Ngày hết hạn"
@@ -68,10 +87,11 @@ const SecondContent = (props) => {
       ),
     },
   ];
-  
+
   return (
     <div className="content-checkout">
       <div className="form-checkout">
+            <p className="title-checkout">Phương thức thanh toán </p>
         {items.map((item, index) => (
           <Collapse
             key={item.key}
@@ -80,17 +100,25 @@ const SecondContent = (props) => {
             expandIcon={(panelProps) => (
               <>
                 {panelProps.isActive ? (
-                  <div className="active"></div>
+                  <div className="selected"></div>
                 ) : (
-                  <div className="none-active"></div>
+                  <div className="none-selected"></div>
                 )}
               </>
             )}
           />
         ))}
-        <button onClick={() => {onFinish(), props.next()}} className="btn btn-next">
+        <div style={{textAlign:"right",marginTop:"5rem"}}>
+
+        <button
+          onClick={() => {
+            onFinish()
+          }}
+          className="btn btn-next"
+        >
           Bước tiếp theo
         </button>
+        </div>
       </div>
       <div className="list">
         <div style={{ height: 400 }} className="list-order">
@@ -113,6 +141,7 @@ const SecondContent = (props) => {
         </div>
         <p className="btn order-total-price">Tổng tiền: {toltalPrice}.000d</p>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

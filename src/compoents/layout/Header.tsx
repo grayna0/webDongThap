@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
-import MenuPage from "../menu/Menu-page";
 import Search from "antd/es/input/Search";
-import Menuicon from "../menu/Menu_icon";
 import { useSelector } from "react-redux";
 import { MyContext } from "../../hook/Context";
 import protectRoutes from "../../routes/ProtectRoutes";
+import Menuicon from "./menu/Menu_icon";
+import MenuPage from "./menu/Menu-page";
 
 const HeaderChild = ({userLogger}) => {
-  const { listItem } = useSelector((state: any) => state.cart);
+  const { listItems } = useSelector((state: any) => state.cart);
   const {setShowModal} = useContext(MyContext)
 
   
@@ -30,7 +30,7 @@ const HeaderChild = ({userLogger}) => {
         />
         {userLogger ?      <>
         <Menuicon name="user" props={[]} />
-        <Menuicon name="" props={listItem} />
+        <Menuicon name="" props={listItems} />
         </>
         :
         <>

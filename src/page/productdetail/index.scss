@@ -1,0 +1,62 @@
+@use "../../styles/comon.scss" as *;
+
+.item-introduction {
+  .item-img {
+    flex-basis: calc(50% - 2rem);
+  }
+  .item-detail {
+    flex-basis: calc(50% - 2rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: justify;
+    max-width: 40%;
+    .title {
+      color: $main-color;
+      font-size: 48px;
+    }
+    .price {
+      font-size: 36px;
+    }
+    .item-count{
+        
+        display: flex;
+        gap: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid #ccc;
+        div {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        }
+    }
+    .item-total-price{
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #ccc;
+
+        .price{
+            font-size: 24px;
+        }
+    }
+    .wrap-btn{
+        .btn{
+            margin-left: 2rem;
+        }
+        .btn-white,.btn{
+            padding:1rem 2rem;
+    
+        }
+    }
+  }
+}
+.ant-tabs-nav-list{
+    width: 100%;
+}
+.ant-tabs-tab{
+    flex-basis: 33.3%;
+    width:33.3%;
+   justify-content: center; 
+}

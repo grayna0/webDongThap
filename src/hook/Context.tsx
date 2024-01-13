@@ -27,8 +27,47 @@ const MySate = ({ children }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   // Sreach key
+  const handleChange = (value: { value: string; label: React.ReactNode }) => {
+    let productSort;
+    switch (value.value) {
+      case "rate": {
+        productSort = [...products].sort(
+          (itemFirst: any, itemLast: any) => itemFirst.rate - itemLast.rate
+        );
+        break;
+      }
+      case "increase": {
+        productSort = [...products].sort(
+          (itemFirst, itemLast) => itemFirst.price - itemLast.price
+        );
+        break;
+      }
+      case "decrease": {
+        productSort = [...products].sort(
+          (itemFirst, itemLast) => itemLast.price - itemFirst.price
+        );
+        break;
+      }
+      case "none-reverse": {
+        productSort = [...products].sort((itemFirst, itemLast) =>
+          itemFirst.name.localeCompare(itemLast.name)
+        );
+        break;
+      }
+      case "reverse": {
+        productSort = [...products].sort((itemFirst, itemLast) =>
+          itemLast.name.localeCompare(itemFirst.name)
+        );
+        break;
+      }
+    }
+
+    setProducts(productSort);
+  };
   const sreachProducts = (agr) => { 
    const valuesChecked= Object.keys(agr).filter(key  => agr[key] !== null)
+   console.log(agr,valuesChecked);
+   
     try {
       let q = query(collection(fireDB, "products"));
       if (valuesChecked.length > 0) {
@@ -46,6 +85,9 @@ const MySate = ({ children }) => {
             case "rate":
               q = query(q, where("rate", "==", agr.rate));
               break; 
+              case "id":
+                q = query(q, where("doc", "==", agr.id));
+                break; 
           }        
         });     
       }
@@ -75,6 +117,10 @@ const MySate = ({ children }) => {
     setLoading(false);
     setToastMessage("Add product successfully");
   };
+  // Checkout 
+  const handleUserCheckout = () => {
+      
+  }
   // Get Prodcuts
   const getProducts = async () => {
     setLoading(true);
@@ -199,7 +245,7 @@ const MySate = ({ children }) => {
         registerUser,
         withGoogle,
         userLogin,
-
+        handleChange,
         sreachProducts,
     
       }}

@@ -30,7 +30,7 @@ export const cartSlice = createSlice(
                
                     }
                     if(checkItemExits !== undefined){
-                        checkItemExits.quantity ++
+                        checkItemExits.quantity += action.payload.quantity
               
                         
                     }else  {

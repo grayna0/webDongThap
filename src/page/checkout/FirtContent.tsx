@@ -16,6 +16,8 @@ const FirtContent = (props) => {
   };
   return (
     <div className="content-checkout" >
+            <div className="form-checkout">
+       <p className="title-checkout">Thông tin giao hàng </p>
       <Form ref={formRef} layout="vertical" style={{ maxWidth: 600 }} className="form-checkout">
         <Form.Item label="Họ và Tên" name="name">
           <Input />
@@ -74,6 +76,7 @@ const FirtContent = (props) => {
         </button>
         </Form.Item>
       </Form>
+      </div>
       <div className="list">
         <div style={{height:400}} className="list-order">
 
