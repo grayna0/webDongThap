@@ -4,12 +4,17 @@
   display: flex;
   gap: 3rem;
   .sidebar {
-    flex-basis: 20%;
+    flex-basis: calc(20% - 5rem );
     padding: 2rem;
     box-shadow: 0px 4px 4px 0px #00000040;
     background-color: #fcfcfc;
     border-radius: 10px;
     height: max-content;
+    @include lg {
+      max-width: 300px;
+    padding: .3rem;
+
+    }
     .header {
       .sort-price {
         .price-from {
@@ -20,6 +25,9 @@
             color: #00000094;
             font-weight: 600;
             font-size: 18px;
+            @include xl {
+              font-size: 14px;
+            }
           }
         }
       }
@@ -45,14 +53,21 @@
        gap: 20px;
       .box-product {
         flex-basis: calc(25% - 15px);
-        max-height: 435px;
+        max-height: 470px;
         display: flex;
         flex-direction: column;
         box-shadow: 0px 4px 4px 0px #00000040;
         padding: 2rem 0;
         border-radius: 0.5rem;
         gap: 20px;
+        @include xl {
+          flex-basis: calc(33.3% - 15px);
   
+          }
+        @include lg {
+        flex-basis: calc(50% - 15px);
+
+        }
         .box-img {
           background-color: #eeeeee;
   
@@ -119,8 +134,11 @@
           font-size: 18px;
           font-weight: 600;
           color: #20304d;
-          line-height: 11px;
-          letter-spacing: -0.015em;
+          @include xxl {
+            font-size: 16px;
+
+    
+            }
         }
         .box-price {
           font-family: Inter;
@@ -129,6 +147,11 @@
           line-height: 19px;
           letter-spacing: -0.015em;
           color: #fd9f20;
+          @include xxl {
+            font-size: 16px;
+
+    
+            }
         }
       }
     }
@@ -168,4 +191,7 @@
   color: #fd9f20;
   font-size: 18px;
   font-weight: 600;
+  @include xl {
+    font-size: 16px;
+  }
 }

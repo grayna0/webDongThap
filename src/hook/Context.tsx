@@ -4,10 +4,13 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
+  getDocs,
   limit,
   onSnapshot,
   query,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import React, { createContext, useEffect, useState } from "react";
@@ -21,11 +24,12 @@ import {
 import useLocalStorage from "./useStorage";
 export const MyContext = createContext<any>(null);
 const MySate = ({ children }) => {
-  const { setItemStorage, getItemStorage } = useLocalStorage();
+  const { setItemStorage, removeItemStorage } = useLocalStorage();
   const [products, setProducts] = useState<any[]>([]);
   const [product, setProduct] = useState<any>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  
   // Sreach key
   const handleChange = (value: { value: string; label: React.ReactNode }) => {
     let productSort;
@@ -64,34 +68,40 @@ const MySate = ({ children }) => {
 
     setProducts(productSort);
   };
-  const sreachProducts = (agr) => { 
-   const valuesChecked= Object.keys(agr).filter(key  => agr[key] !== null)
-   console.log(agr,valuesChecked);
-   
+  const sreachProducts = (agr) => {
+    const valuesChecked = Object.keys(agr).filter((key) => agr[key] !== null);
     try {
       let q = query(collection(fireDB, "products"));
       if (valuesChecked.length > 0) {
-            valuesChecked.forEach((key) => {
+        valuesChecked.forEach((key) => {
           switch (key) {
             case "price":
-              q = query(q, where("price", ">=", agr.price[0]), where("price", "<=", agr.price[1]));
+              q = query(
+                q,
+                where("price", ">=", agr.price[0]),
+                where("price", "<=", agr.price[1])
+              );
               break;
             case "cate":
               q = query(q, where("cate", "==", agr.cate));
               break;
             case "name":
-              q = query(q, where("name", ">=", agr.name), where("name", "<=", agr.name + '\uf8ff'));
+              q = query(
+                q,
+                where("name", ">=", agr.name),
+                where("name", "<=", agr.name + "\uf8ff")
+              );
               break;
             case "rate":
               q = query(q, where("rate", "==", agr.rate));
-              break; 
-              case "id":
-                q = query(q, where("doc", "==", agr.id));
-                break; 
-          }        
-        });     
+              break;
+            case "id":
+              q = query(q, where("doc", "==", agr.id));
+              break;
+          }
+        });
       }
-      const unsubscribe =  onSnapshot(q, (querySnapshot) => {
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const productsData: any = [];
         querySnapshot.forEach((doc) => {
           productsData.push({ ...doc.data(), id: doc.id });
@@ -108,8 +118,8 @@ const MySate = ({ children }) => {
     }
   };
 
-
   // ADD PRODUCT
+
   const addProduct = async (values) => {
     setLoading(true);
     const firebaseCollection = collection(fireDB, "products");
@@ -117,14 +127,15 @@ const MySate = ({ children }) => {
     setLoading(false);
     setToastMessage("Add product successfully");
   };
-  // Checkout 
-  const handleUserCheckout = () => {
-      
-  }
+
+  // Checkout
+
+  const handleUserCheckout = () => {};
+
   // Get Prodcuts
+
   const getProducts = async () => {
     setLoading(true);
-
     try {
       const q = query(collection(fireDB, "products"));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -142,7 +153,29 @@ const MySate = ({ children }) => {
       console.log(error);
     }
   };
+
+  // getUser
+
+  const getUser = async (values) => {
+    setLoading(true);
+    const userData: any = [];
+    try {
+      const q = query(collection(fireDB, "users"), where("email", "==", values));
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach((doc) => {
+        userData.push({ ...doc.data(), id: doc.id });
+      });
+      setLoading(false);
+    } catch (error) {
+      setToastMessage("Get products error");
+      console.log(error);
+    }
+    return userData;
+  };
+
   // Register
+
   const registerUser = async (values: any) => {
     try {
       const user = await createUserWithEmailAndPassword(
@@ -152,10 +185,12 @@ const MySate = ({ children }) => {
       );
       const userRef = collection(fireDB, "users");
       await addDoc(userRef, {
-        name: values.email,
-        email: values.username,
+        email: values.email,
+        name: values.username,
         uid: user.user.uid,
+        img: "avatar.png",
         time: Timestamp.now(),
+      
       });
       setToastMessage("Register successful");
     } catch (error) {
@@ -178,6 +213,7 @@ const MySate = ({ children }) => {
       if (values.remember === true) {
         setItemStorage("u", {
           token: emailLogin.user.accessToken,
+          // id: emailLogin.user.id,
           username: emailLogin.user.email,
         });
       }
@@ -193,11 +229,21 @@ const MySate = ({ children }) => {
     }
   };
   // with google
+
   const withGoogle = async () => {
     try {
       const googleAccount = await signInWithPopup(auth, provider);
-      setItemStorage("u", googleAccount.user.uid);
+      setItemStorage("u", {
+        user: googleAccount.user.email,
+        uid: googleAccount.user.uid,
+      });
       setToastMessage("Login successful");
+      console.log(googleAccount);
+      
+      setTimeout(() => {
+        setLoading(false);
+        setShowModal(false);
+      }, 1500);
     } catch (error) {
       console.log(error);
       setToastMessage("Failed to Register");
@@ -205,18 +251,46 @@ const MySate = ({ children }) => {
   };
 
   // update Product
-  const updateProduct = async () => {
-    setLoading(true);
 
+  const updateProduct = async (values?) => {
+    setLoading(true);
+    const item = values ? values : product;
     try {
-      await setDoc(doc(fireDB, "products", product.id), product);
-      setToastMessage("Update product successfully");
+      await setDoc(doc(fireDB, "products", item.id), item);
       setLoading(false);
     } catch (error) {
+      console.log(error);
+      
       setToastMessage("Update product error");
     }
   };
+
+  // update user
+
+  const updatedUser = async (values,uid,type?) => {
+    console.log(values);
+    
+    setLoading(true); 
+    try {
+      const q = query(collection(fireDB, "users"), where("uid", "==", uid)); 
+      const querySnapshot = await getDocs(q);     
+      if (!querySnapshot.empty ) {
+        const docRef = querySnapshot.docs[0].ref;   
+        await updateDoc(docRef, values);
+        // setToastMessage("Update user successfully");
+      }
+      if(type === "checkout") {
+        removeItemStorage("cart")
+      }
+      setLoading(false);
+    } catch (error) {
+    console.log(error);
+
+      setToastMessage("Update user error","error");
+    }
+  };
   // Delete Product
+
   const deleteProduct = async (item: any) => {
     setLoading(true);
     try {
@@ -247,7 +321,8 @@ const MySate = ({ children }) => {
         userLogin,
         handleChange,
         sreachProducts,
-    
+        getUser,
+        updatedUser
       }}
     >
       {children}

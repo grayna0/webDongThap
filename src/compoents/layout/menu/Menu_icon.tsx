@@ -2,6 +2,8 @@ import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import { Dropdown, MenuProps, Space } from "antd";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import useLocalStorage from "../../../hook/useStorage";
+const {removeItemStorage} =useLocalStorage()
 const userDropdown = [
   {
     key: "1",
@@ -9,7 +11,7 @@ const userDropdown = [
   },
   {
     key: "1",
-    label: <a>Log Out</a>,
+    label: <a onClick={()=>removeItemStorage("u") }>Log Out</a>,
   },
 ];
 

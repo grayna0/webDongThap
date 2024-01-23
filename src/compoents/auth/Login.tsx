@@ -14,13 +14,10 @@ type FieldType = {
   password?: string;
   remember?: string;
 };
-
 const Login = () => {
   const { showModal, setShowModal,loading } = useContext(MyContext);
-
   const { userLogin, withGoogle } = useContext(MyContext);
   const [haveAccount, setHaveAccount] = useState<boolean>(false);
-  const navigate = useNavigate();
   const switchLoginAndSigin = () => {
     setHaveAccount(false);
   };
@@ -28,8 +25,6 @@ const Login = () => {
   const onFinish = async (values: any) => {
     userLogin(values)
   };
-
-  const checkEmail = () => {};
   return (
     <>
       {showModal && (

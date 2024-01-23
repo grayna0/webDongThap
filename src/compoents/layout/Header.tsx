@@ -17,17 +17,19 @@ const HeaderChild = ({userLogger}) => {
     <div className="header">
       <div className="menu-page">
         <div className="logo">
-          <h1>DongThap</h1>
-          <p>One Comune One Product</p>
+         <img src="./logo.png" alt="img" />
         </div>
         <MenuPage />
       </div>
       <div className="menu-icon">
+        <div className="input-sreach">
+
         <Search
           placeholder="input search text"
           onSearch={onSearch}
           style={{ width: 200 }}
         />
+        </div>
         {userLogger ?      <>
         <Menuicon name="user" props={[]} />
         <Menuicon name="" props={listItems} />

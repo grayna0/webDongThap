@@ -1,12 +1,24 @@
+@use "../../../styles/comon.scss" as * ;
 .section-5 {
   position: relative;
   padding: 5rem 10rem;
+  @include lg {
+    padding: 5rem 2rem;
+
+    }
   .next {
     position: absolute;
     top: 50%;
     right: 2%;
     font-size: 44px;
     color: #ccc;
+    @include xxl {
+      top: 50%;
+      right: 5%;
+    }
+    @include lg {
+    display: none;
+    }
   }
   .prev {
     position: absolute;
@@ -14,6 +26,13 @@
     left: 2%;
     font-size: 44px;
     color: #ccc;
+    @include xxl {
+      top: 50%;
+      left: 5%;
+    }
+    @include lg {
+      display: none;
+      }
   }
   .header-title {
     h1 {
@@ -25,13 +44,19 @@
       color: #3f7824;
       margin: auto;
       padding-bottom: 50px;
+      @include xxl {
+        font-size: 32px;
+      }
     }
   }
   .content {
     max-width: 282px;
     display: block !important;
     margin: auto;
+    @include lg {
+      max-width: 182px;
 
+    }
     h1 {
       height: 84px;
       font-family: RalewayBold;
@@ -39,6 +64,9 @@
       font-weight: 600;
       line-height: 28px;
       margin: 40px 0;
+      @include xxl {
+        font-size: 20px;
+      }
     }
     p {
       font-family: Raleway400;
@@ -73,14 +101,30 @@
 .wrap-flex {
   display: flex;
   justify-content: center;
+  @include lg {
+  justify-content: space-around;
 
+  flex-wrap: wrap;
+  gap: 2rem;
+  }
   .content {
     flex-basis: calc(22% - 30px);
     display: flex;
     gap: 12px;
     padding: 0 30px;
+    @include xxl {
+      padding: 0 10px;
+    }
+    @include lg {
+      flex-basis: calc(40% - 30px);
+    
+    }
     &:not(:nth-last-child(1) ){
       border-right:1px solid #565656;
+      @include lg {
+        border-right:none;
+      
+      }
     }
     .img {
       width: 130px;

@@ -10,23 +10,30 @@
     .header {
       display: flex;
       justify-content: space-between;
-
       .menu-page {
         flex: 1;
         display: flex;
         justify-content: space-around;
+        align-items: center;
+        padding: 0 10rem;
+        @include xl{
+          flex-basis: 40%;
+          }
+        @include xxl{
+        padding: 0 1rem;
+        }
         .logo {
           flex: 0.5;
-          color: #097949;
-          h1 {
-            font-size: 34px;
-          }
         }
         .list-page {
           flex: 1;
           display: flex;
           justify-content: space-around;
           gap: 20px;
+          @include xl{
+            flex-basis: 40%;
+    
+            }
           li {
             a {
               color: $main-color;
@@ -47,6 +54,11 @@
         align-items: center;
         padding-right: 50px;
         gap: 30px;
+        .input-sreach{
+          @include lg {
+            display: none;
+          }
+        }
         .icons {
           width: 20px;
           height: 20px;
@@ -62,7 +74,10 @@
       top: 50%;
       right: 2%;
       font-size: 44px;
-      color: #ccc;
+      color: #ccc;  
+      @include xl{
+        display: none
+        }
     }
     .prev {
       position: absolute;
@@ -70,6 +85,9 @@
       left: 2%;
       font-size: 44px;
       color: #ccc;
+      @include xl{
+        display: none
+        }
     }
 
     .ant-carousel {
@@ -79,11 +97,21 @@
         justify-content: center;
         align-items: center;
         min-height: 720px;
+        @include lg{
+          min-height:  420px;
+       
+          }
         .content-center {
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
+          @include xxl {
+            max-width: 350px;
+          }
+          @include lg{
+            max-width: 200px;
+            }
         }
         .content-right {
           color: white;
@@ -101,15 +129,22 @@
           justify-content: center;
           align-items: center;
           min-height: 720px;
+          @include lg{
+            min-height:  220px;
+            }
           .content {
             max-width: 381px;
             h1 {
               font-family: RalewayBold;
               font-size: 48px;
               font-weight: 800;
-              line-height: 56px;
-              letter-spacing: 0em;
               text-align: left;
+              @include xxl{
+              font-size: 32px;
+              }
+              @include lg{
+                font-size: 24px;
+                }
             }
             p {
               font-family: Raleway400;
@@ -118,6 +153,14 @@
               line-height: 28px;
               letter-spacing: 0em;
               text-align: left;
+              @include xxl{
+                font-size: 18px;
+                }
+                @include xxl{
+                  font-size: 16px;
+                  }
+  
+
             }
           }
         }
@@ -150,7 +193,6 @@
           h2 {
             margin-bottom: 1.2rem;
             font-family: RalewayBold;
-
             font-size: 15px;
             font-weight: 500;
             line-height: 18px;
@@ -176,10 +218,14 @@
       }
       .col-2 {
         flex-basis: 55%;
-
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
+        h2{
+        @include lg {
+          font-size: 18px;
+        }
+        }
         .footer-menu {
           display: flex;
           justify-content: space-between;
@@ -207,6 +253,7 @@
           flex-wrap: wrap;
           gap: 10px;
           .col {
+            flex-basis: 50%;
             display: flex;
             gap: 10px;
 

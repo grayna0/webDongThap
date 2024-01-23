@@ -4,7 +4,7 @@ import React from 'react'
 
 const Breadcrumbs = ({breadCrumb}) => {
   return (
-    <>
+    <div style={{margin:"4rem 0 2rem 0" }}>
     <Breadcrumb
     items={[
       {
@@ -22,7 +22,7 @@ const Breadcrumbs = ({breadCrumb}) => {
       }
     ]}
   />
-    </>
+    </div>
 
   )
 }

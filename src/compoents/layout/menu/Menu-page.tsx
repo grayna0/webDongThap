@@ -8,9 +8,11 @@ const MenuPage = () => {
     <ul className="list-page">
       {router.map((item,i) => {
         return (
-          <li key={i}>
+          <>
+         {item.title !== "" && <li key={i}>
             <NavLink  to={item.path}>{item?.title}</NavLink>
-          </li>
+          </li>}
+          </>
         );
       })}
     </ul>

@@ -1,10 +1,12 @@
 import { Collapse, CollapseProps, Form, Input } from "antd";
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { useSelector } from "react-redux";
 import setToastMessage from './../../compoents/setToastMessage';
 import { ToastContainer } from "react-toastify";
+import { MyContext } from "../../hook/Context";
 
 const SecondContent = (props) => {
+  const {updatedUser} = useContext(MyContext)
   const { listItems } = useSelector((state: any) => state.cart);
   const toltalPrice = listItems.reduce((accumulator, item) => {
     return accumulator + item.price * item.quantity;
@@ -13,11 +15,11 @@ const SecondContent = (props) => {
   const onFinish = async () => {
     try {
       
-      console.log("Form values:", formRef.current.getFieldValue());
       if( formRef.current.getFieldValue() !== undefined)
-      
+       await updatedUser({order:listItems},props?.user.uid,"checkout")
        props.next();
     } catch (error) {
+      console.log(error);
       setToastMessage("Bạn chưa chọn phương thức thanh toán")
     }
   };

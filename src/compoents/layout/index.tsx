@@ -26,7 +26,7 @@ const LayOut = ({ children, home ,breadCrumb}) => {
       <Content className="main">
         
         <div className={home ? "" : "container"}>
-          {!home && <Breadcrumbs breadCrumb={breadCrumb}/>}
+          {!home && <Breadcrumbs  breadCrumb={breadCrumb}/>}
           {children}
         </div>
       </Content>

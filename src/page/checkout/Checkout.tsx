@@ -4,6 +4,7 @@ import FirtContent from "./FirtContent";
 import SecondContent from "./SecondContent";
 import "./index.scss";
 import { CheckCircleOutlined } from "@ant-design/icons";
+import protectRoutes from "../../routes/ProtectRoutes";
 const steps = [
   {
     title: (
@@ -70,7 +71,7 @@ const steps = [
   },
 ];
 
-const Checkout = () => {
+const Checkout = (props) => {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
 
@@ -100,11 +101,11 @@ const Checkout = () => {
     <>
       <Steps current={current} items={items} />
       <div style={contentStyle}>
-        {" "}
-        {React.cloneElement(steps[current].content, { next: next })}
+      
+        {React.cloneElement(steps[current].content, { next: next ,user: props.userLogger})}
       </div>
     </>
   );
 };
 
-export default Checkout;
+export default protectRoutes(Checkout);

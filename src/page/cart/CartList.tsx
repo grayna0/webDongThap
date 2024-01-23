@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { Space, Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";

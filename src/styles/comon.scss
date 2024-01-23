@@ -73,6 +73,11 @@ span {
   margin: 0;
   padding: 0;
 }
+p{
+  font-family: Raleway500;
+}
+
+
 a {
   text-decoration: none;
   color: black;
@@ -91,6 +96,9 @@ button{
 }
 .container{
   padding: 0 10rem;
+  @include xxl {
+    padding: 0 2rem;
+  }
 }
 .price{
   font-family: Inter;
