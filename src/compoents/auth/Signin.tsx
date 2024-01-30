@@ -3,17 +3,12 @@ import React, { useContext, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MyContext } from "../../hook/Context";
+import { FieldType } from "../../admin/type";
 
-type FieldType = {
-  username?: string;
-  email?: string;
-  password?: string;
-  remember?: string;
-};
-const Singin = ({setHaveAccount}) => {
-  const {registerUser,withGoogle} = useContext(MyContext)
+const Singin = ({ setHaveAccount }) => {
+  const { registerUser, withGoogle } = useContext(MyContext);
   const onFinish = async (values: any) => {
-    registerUser(values)
+    registerUser(values);
   };
   const checkEmail = () => {};
   return (
@@ -24,10 +19,8 @@ const Singin = ({setHaveAccount}) => {
         alignItems: "center",
         height: "100vh",
         flexDirection: "column",
-    
       }}
-   className="modal"
-
+      className="modal"
     >
       <Form
         name="basic"
@@ -41,10 +34,8 @@ const Singin = ({setHaveAccount}) => {
         }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        // onFinishFailed={onFinishFailed}
-        // autoComplete="off"
       >
-              <h2 style={{ textAlign: "center" }}>Sign in</h2>
+        <h2 style={{ textAlign: "center" }}>Sign in</h2>
 
         <Form.Item<FieldType>
           label="Username"
@@ -76,7 +67,6 @@ const Singin = ({setHaveAccount}) => {
         <Form.Item<FieldType>
           name="remember"
           valuePropName="checked"
-          // wrapperCol={{ offset: 8, span: 16 }}
         >
           <Checkbox>Remember me</Checkbox>
           <p onClick={checkEmail}>Forget Password?</p>
@@ -110,11 +100,13 @@ const Singin = ({setHaveAccount}) => {
                 <h3>Login With Google</h3>
               </button>
             </div>
-           
-              <a style={{ textAlign: "center", textDecoration: "underline" }} onClick={setHaveAccount}>
-                I have Account?
-              </a>
-          
+
+            <a
+              style={{ textAlign: "center", textDecoration: "underline" }}
+              onClick={setHaveAccount}
+            >
+              I have Account?
+            </a>
           </div>
         </Form.Item>
       </Form>

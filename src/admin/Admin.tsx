@@ -1,14 +1,12 @@
-import React from 'react'
-
-import AdminProducts from './AdminTabs'
+import React from "react";
+import AdminProducts from "./AdminTabs";
 
 const Admin = () => {
   return (
     <div>
-
-        <AdminProducts/>
+      <AdminProducts />
     </div>
-  )
-}
+  );
+};
 
-export default Admin
+export default Admin;

@@ -13,13 +13,9 @@ const tabsArray = [
   },
 ];
 const AdminProducts = () => {
-  const onChange = (key: string) => {
-    console.log(key);
-  };
   return (
     <div>
-      <Tabs
-        onChange={onChange}
+      <Tabs  
         type="card"
         items={tabsArray.map((item, i) => {
           const id = String(i + 1);

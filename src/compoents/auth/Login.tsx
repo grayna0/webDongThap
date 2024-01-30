@@ -7,23 +7,18 @@ import Singin from "./Signin";
 import { useNavigate } from "react-router-dom";
 import protectRoutes from "../../routes/ProtectRoutes";
 import Loader from "../loader/loader";
+import { FieldType } from "../../admin/type";
 
-type FieldType = {
-  username?: string;
-  email?: string;
-  password?: string;
-  remember?: string;
-};
 const Login = () => {
-  const { showModal, setShowModal,loading } = useContext(MyContext);
-  const { userLogin, withGoogle } = useContext(MyContext);
+  const { showModal, setShowModal, loading, withGoogle, userLogin } =
+    useContext(MyContext);
   const [haveAccount, setHaveAccount] = useState<boolean>(false);
   const switchLoginAndSigin = () => {
     setHaveAccount(false);
   };
 
   const onFinish = async (values: any) => {
-    userLogin(values)
+    userLogin(values);
   };
   return (
     <>
@@ -55,7 +50,6 @@ const Login = () => {
                 }}
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
-                // onFinishFailed={onFinishFailed}
                 autoComplete="off"
               >
                 <h2 style={{ textAlign: "center" }}>Log in</h2>
@@ -79,13 +73,8 @@ const Login = () => {
                   <Input.Password />
                 </Form.Item>
 
-                <Form.Item<FieldType>
-                  name="remember"
-                  valuePropName="checked"
-  
-                >
+                <Form.Item<FieldType> name="remember" valuePropName="checked">
                   <Checkbox>Remember me</Checkbox>
-                  {/* <p onClick={checkEmail}>Forget Password?</p> */}
                 </Form.Item>
 
                 <Form.Item>
@@ -128,10 +117,11 @@ const Login = () => {
                 >
                   I dont have Account?
                 </p>
-              { loading &&
-              <div style={{width:50,margin:"auto"}}>
-                <Loader/>
-                </div>}
+                {loading && (
+                  <div style={{ width: 50, margin: "auto" }}>
+                    <Loader />
+                  </div>
+                )}
               </Form>
               <ToastContainer />
             </div>

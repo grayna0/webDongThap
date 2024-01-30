@@ -3,11 +3,12 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, InputNumber, Select, Upload } from "antd";
 import { ToastContainer } from "react-toastify";
 import { MyContext } from "../hook/Context";
+import { ProductType } from "./type";
+
 const { TextArea } = Input;
 
-const AddProduct = ({ productId,str }: { productId?: any,str?:any }) => {
-  const { updateProduct, addProduct, setProduct, product } =
-    useContext(MyContext);
+const AddProduct = ({ productId,str }: { productId?: ProductType,str?:string }) => {
+  const { updateProduct, addProduct, setProduct, product } = useContext(MyContext);
 
   const [form] = Form.useForm();
   const normFile = (e: any) => {
@@ -25,8 +26,6 @@ const AddProduct = ({ productId,str }: { productId?: any,str?:any }) => {
       des:values.des,
       comment:[],
       img:values.img.map(img => img.thumbUrl)
-
-    
     }
     if(str === "update"){
       updateProduct();
@@ -108,7 +107,6 @@ const AddProduct = ({ productId,str }: { productId?: any,str?:any }) => {
           </Button>
         </Form.Item>
       </Form>
-
       <ToastContainer />
     </>
   );

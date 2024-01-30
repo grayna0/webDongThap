@@ -7,15 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useLocalStorage from "../../hook/useStorage";
 import { Link, useNavigate } from "react-router-dom";
+import { FieldType } from "../../admin/type";
 
-
-type FieldType = {
-  username?: string;
-  email?: string;
-  password?: string;
-  remember?: string;
-
-};
 const LoginAdmin = () => {
   const navigate= useNavigate()
   const { setItemStorage } = useLocalStorage();

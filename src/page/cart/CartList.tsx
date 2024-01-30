@@ -8,7 +8,7 @@ import "./index.scss"
 import { useNavigate } from "react-router-dom";
 const CartList = () => {
   const { listItems } = useSelector((state: any) => state.cart);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState<number>(0);
   const navigate = useNavigate()
   useEffect(() => {
     const price = listItems.reduce((accumulator, item) => {

@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { DataType } from "./type";
+import { DataType, ProductType } from "./type";
 import AddProduct from "./AddProduct";
 import { MyContext } from "../hook/Context";
 
@@ -44,7 +44,7 @@ const AllProducts = () => {
           <a
             onClick={() => {
               setShowModal(true);
-              products.map((i: any) =>
+              products.map((i: ProductType) =>
                 i.id === record.id ? setProduct(i) : false
               );
             }}

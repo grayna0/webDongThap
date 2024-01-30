@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, message, Steps, theme } from "antd";
+import { Steps, theme } from "antd";
 import FirtContent from "./FirtContent";
 import SecondContent from "./SecondContent";
 import "./index.scss";
@@ -73,7 +73,7 @@ const steps = [
 
 const Checkout = (props) => {
   const { token } = theme.useToken();
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState<number>(0);
 
   const next = () => {
     setCurrent(current + 1);
@@ -101,7 +101,6 @@ const Checkout = (props) => {
     <>
       <Steps current={current} items={items} />
       <div style={contentStyle}>
-      
         {React.cloneElement(steps[current].content, { next: next ,user: props.userLogger})}
       </div>
     </>
